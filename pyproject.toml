@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "anilistwrappy"
-version = "0.0.1"
+version = "0.0.2"
 description = "An API Wrapper for Official Anilist.co GraphQL API"
 authors = ["Sayan Biswas <sayan@pokurt.me>"]
 license = "Unlicense License"
 packages = [
-    { include = "src" }
+    { include = "anilistWrapPY" }
 ]
 
 [tool.poetry.dependencies]

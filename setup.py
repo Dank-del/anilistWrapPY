@@ -19,10 +19,11 @@ setuptools.setup(
     author="Dank-del",
     author_email="sayan@pokurt.me",
     url="https://github.com/Dank-del/anilistWrapPY",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(where="anilistWrapPY"),
     classifiers=[
         "Programming Language :: Python :: 3.8",
     ],
+    package_dir={"": "anilistWrapPY"},
     install_requires=dependencies,
     python_requires=">=3.7",
 )

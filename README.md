@@ -1,4 +1,5 @@
-# anilistWrapPY ![downloads](https://img.shields.io/pypi/dm/anilistWrapPY) ![ver](https://img.shields.io/pypi/v/anilistWrapPY)
+# anilistWrapPY 
+![downloads](https://img.shields.io/pypi/dm/anilistWrapPY) ![ver](https://img.shields.io/pypi/v/anilistWrapPY)
 > A smol anilist wrapper for my personal use :p
 
 ## Media

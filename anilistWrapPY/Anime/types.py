@@ -1,3 +1,6 @@
+# The contents of this file is free and unencumbered software released into the
+# public domain. For more information, please refer to <http://unlicense.org/>
+
 from dataclasses import dataclass
 from typing import Optional, Any, List, TypeVar, Callable, Type, cast
 

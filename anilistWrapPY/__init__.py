@@ -3,4 +3,5 @@
 
 from .client import aniWrapPYClient
 
-__version__ = "0.0.4"
+__all__ = [aniWrapPYClient]
+__version__ = "0.0.5"

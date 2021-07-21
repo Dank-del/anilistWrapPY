@@ -2,51 +2,10 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 from dataclasses import dataclass
-from typing import Optional, List, Any, TypeVar, Callable, Type, cast
 from enum import Enum
+from typing import Optional, Any, List
 
-
-T = TypeVar("T")
-EnumT = TypeVar("EnumT", bound=Enum)
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
-def from_none(x: Any) -> Any:
-    assert x is None
-    return x
-
-
-def from_union(fs, x):
-    for f in fs:
-        try:
-            return f(x)
-        except:
-            pass
-    assert False
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-def to_enum(c: Type[EnumT], x: Any) -> EnumT:
-    assert isinstance(x, c)
-    return x.value
+from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_list, to_class, to_enum
 
 
 @dataclass
@@ -60,8 +19,7 @@ class AiringSchedule:
         return AiringSchedule(nodes)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["nodes"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.nodes)
+        result: dict = {"nodes": from_union([lambda x: from_list(lambda x: x, x), from_none], self.nodes)}
         return result
 
 
@@ -76,8 +34,7 @@ class ExternalLink:
         return ExternalLink(url)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["url"] = from_union([from_str, from_none], self.url)
+        result: dict = {"url": from_union([from_str, from_none], self.url)}
         return result
 
 
@@ -106,10 +63,9 @@ class Title:
         return Title(romaji, english, native)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["romaji"] = from_union([from_str, from_none], self.romaji)
-        result["english"] = from_union([from_none, from_str], self.english)
-        result["native"] = from_union([from_str, from_none], self.native)
+        result: dict = {"romaji": from_union([from_str, from_none], self.romaji),
+                        "english": from_union([from_none, from_str], self.english),
+                        "native": from_union([from_str, from_none], self.native)}
         return result
 
 
@@ -161,24 +117,25 @@ class Media:
         return Media(id, title, type, format, status, description, episodes, banner_image, external_links, duration, chapters, volumes, genres, synonyms, average_score, airing_schedule, site_url)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_int, from_none], self.id)
-        result["title"] = from_union([lambda x: to_class(Title, x), from_none], self.title)
-        result["type"] = from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type)
-        result["format"] = from_union([lambda x: to_enum(Format, x), from_none], self.format)
-        result["status"] = from_union([lambda x: to_enum(Status, x), from_none], self.status)
-        result["description"] = from_union([from_none, from_str], self.description)
-        result["episodes"] = from_union([from_int, from_none], self.episodes)
-        result["bannerImage"] = from_union([from_none, from_str], self.banner_image)
-        result["externalLinks"] = from_union([lambda x: from_list(lambda x: to_class(ExternalLink, x), x), from_none], self.external_links)
-        result["duration"] = from_union([from_int, from_none], self.duration)
-        result["chapters"] = from_union([from_int, from_none], self.chapters)
-        result["volumes"] = from_union([from_int, from_none], self.volumes)
-        result["genres"] = from_union([lambda x: from_list(from_str, x), from_none], self.genres)
-        result["synonyms"] = from_union([lambda x: from_list(from_str, x), from_none], self.synonyms)
-        result["averageScore"] = from_union([from_int, from_none], self.average_score)
-        result["airingSchedule"] = from_union([lambda x: to_class(AiringSchedule, x), from_none], self.airing_schedule)
-        result["siteUrl"] = from_union([from_str, from_none], self.site_url)
+        result: dict = {"id": from_union([from_int, from_none], self.id),
+                        "title": from_union([lambda x: to_class(Title, x), from_none], self.title),
+                        "type": from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type),
+                        "format": from_union([lambda x: to_enum(Format, x), from_none], self.format),
+                        "status": from_union([lambda x: to_enum(Status, x), from_none], self.status),
+                        "description": from_union([from_none, from_str], self.description),
+                        "episodes": from_union([from_int, from_none], self.episodes),
+                        "bannerImage": from_union([from_none, from_str], self.banner_image),
+                        "externalLinks": from_union(
+                            [lambda x: from_list(lambda x: to_class(ExternalLink, x), x), from_none],
+                            self.external_links), "duration": from_union([from_int, from_none], self.duration),
+                        "chapters": from_union([from_int, from_none], self.chapters),
+                        "volumes": from_union([from_int, from_none], self.volumes),
+                        "genres": from_union([lambda x: from_list(from_str, x), from_none], self.genres),
+                        "synonyms": from_union([lambda x: from_list(from_str, x), from_none], self.synonyms),
+                        "averageScore": from_union([from_int, from_none], self.average_score),
+                        "airingSchedule": from_union([lambda x: to_class(AiringSchedule, x), from_none],
+                                                     self.airing_schedule),
+                        "siteUrl": from_union([from_str, from_none], self.site_url)}
         return result
 
 
@@ -193,8 +150,8 @@ class Page:
         return Page(media)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["media"] = from_union([lambda x: from_list(lambda x: to_class(Media, x), x), from_none], self.media)
+        result: dict = {
+            "media": from_union([lambda x: from_list(lambda x: to_class(Media, x), x), from_none], self.media)}
         return result
 
 
@@ -209,8 +166,7 @@ class Data:
         return Data(page)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["Page"] = from_union([lambda x: to_class(Page, x), from_none], self.page)
+        result: dict = {"Page": from_union([lambda x: to_class(Page, x), from_none], self.page)}
         return result
 
 
@@ -225,8 +181,7 @@ class AniListMedia:
         return AniListMedia(data)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["data"] = from_union([lambda x: to_class(Data, x), from_none], self.data)
+        result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
         return result
 
 

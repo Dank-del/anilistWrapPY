@@ -1,3 +1,2 @@
-
-class AniListException(Exception):
+class AniListException(BaseException):
     pass

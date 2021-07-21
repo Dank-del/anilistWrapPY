@@ -55,9 +55,8 @@ class Location:
         return Location(line, column)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["line"] = from_union([from_int, from_none], self.line)
-        result["column"] = from_union([from_int, from_none], self.column)
+        result: dict = {"line": from_union([from_int, from_none], self.line),
+                        "column": from_union([from_int, from_none], self.column)}
         return result
 
 
@@ -76,10 +75,10 @@ class Error:
         return Error(message, status, locations)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["message"] = from_union([from_str, from_none], self.message)
-        result["status"] = from_union([from_int, from_none], self.status)
-        result["locations"] = from_union([lambda x: from_list(lambda x: to_class(Location, x), x), from_none], self.locations)
+        result: dict = {"message": from_union([from_str, from_none], self.message),
+                        "status": from_union([from_int, from_none], self.status),
+                        "locations": from_union([lambda x: from_list(lambda x: to_class(Location, x), x), from_none],
+                                                self.locations)}
         return result
 
 
@@ -96,9 +95,9 @@ class AniListError:
         return AniListError(data, errors)
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["data"] = from_none(self.data)
-        result["errors"] = from_union([lambda x: from_list(lambda x: to_class(Error, x), x), from_none], self.errors)
+        result: dict = {"data": from_none(self.data),
+                        "errors": from_union([lambda x: from_list(lambda x: to_class(Error, x), x), from_none],
+                                             self.errors)}
         return result
 
 

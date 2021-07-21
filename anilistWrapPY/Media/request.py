@@ -1,16 +1,19 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
-from anilistWrapPY.errors.types import AniListError
-from anilistWrapPY.errors.ex_class import AniListException
-from anilistWrapPY.Media.types import AniListMedia
-from anilistWrapPY.Media.graphql import media_query
+import json
+
 import httpx
+
+from anilistWrapPY.Media.graphql import media_query
+from anilistWrapPY.Media.types import AniListMedia, ani_list_media_from_dict
+from anilistWrapPY.errors.ex_class import AniListException
+from anilistWrapPY.errors.types import ani_list_error_from_dict
 
 
 def GetMedia(search: str, baseUrl: str) -> AniListMedia:
     variables = {"search": search}
     r = (httpx.post(baseUrl, json={"query": media_query, "variables": variables})).json()
     try:
-        return AniListMedia(**r)
-    except AniListException:
-        return AniListError(**r)
+        return ani_list_media_from_dict(r)
+    except json.JSONDecodeError:
+        raise AniListException("{]".format(ani_list_error_from_dict(r)))

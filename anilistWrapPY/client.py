@@ -7,16 +7,15 @@ from anilistWrapPY.Character.request import GetCharacter
 from anilistWrapPY.Media.request import GetMedia
 
 
-
 class aniWrapPYClient:
     def __init__(self, *, baseUrl: str = "https://graphql.anilist.co") -> None:
         self.baseUrl = baseUrl
-        
+
     def Anime(self, query: str):
         return GetAnime(search=query, baseUrl=self.baseUrl)
-    
+
     def Media(self, query: str):
         return GetMedia(search=query, baseUrl=self.baseUrl)
-    
+
     def Character(self, query: str):
         return GetCharacter(search=query, baseUrl=self.baseUrl)

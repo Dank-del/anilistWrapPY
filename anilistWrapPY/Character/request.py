@@ -16,4 +16,4 @@ def GetCharacter(search: str, baseUrl: str) -> AniListCharacter:
     try:
         return ani_list_character_from_dict(r)
     except json.JSONDecodeError:
-        raise AniListException("{]".format(ani_list_error_from_dict(r)))
+        raise AniListException("{}".format(ani_list_error_from_dict(r)))

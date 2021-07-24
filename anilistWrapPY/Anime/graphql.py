@@ -33,6 +33,7 @@ anime_query = '''query ($id: Int,$search: String) {
           }
           externalLinks{
             url
+            site
           }
           averageScore
           genres

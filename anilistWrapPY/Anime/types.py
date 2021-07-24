@@ -10,15 +10,19 @@ from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_
 @dataclass
 class ExternalLink:
     url: Optional[str] = None
+    site: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ExternalLink':
         assert isinstance(obj, dict)
         url = from_union([from_str, from_none], obj.get("url"))
-        return ExternalLink(url)
+        site = from_union([from_str, from_none], obj.get("site"))
+        return ExternalLink(url, site)
 
     def to_dict(self) -> dict:
-        result: dict = {"url": from_union([from_str, from_none], self.url)}
+        result: dict = {}
+        result["url"] = from_union([from_str, from_none], self.url)
+        result["site"] = from_union([from_str, from_none], self.site)
         return result
 
 

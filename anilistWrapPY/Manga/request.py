@@ -4,16 +4,16 @@ import json
 
 import httpx
 
-from anilistWrapPY.Media.graphql import media_query
-from anilistWrapPY.Media.types import AniListMedia, ani_list_media_from_dict
+from anilistWrapPY.Manga.graphql import manga_query
+from anilistWrapPY.Manga.types import AnilistManga, anilist_manga_from_dict
+from anilistWrapPY.errors import ani_list_error_from_dict
 from anilistWrapPY.errors.ex_class import AniListException
-from anilistWrapPY.errors.types import ani_list_error_from_dict
 
 
-def GetMedia(search: str, baseUrl: str) -> AniListMedia:
+def GetManga(search: str, baseUrl: str) -> AnilistManga:
     variables = {"search": search}
-    r = (httpx.post(baseUrl, json={"query": media_query, "variables": variables})).json()
+    r = (httpx.post(baseUrl, json={"query": manga_query, "variables": variables})).json()
     try:
-        return ani_list_media_from_dict(r)
+        return anilist_manga_from_dict(r)
     except json.JSONDecodeError:
         raise AniListException("{}".format(ani_list_error_from_dict(r)))

@@ -6,6 +6,29 @@ from typing import Optional, Any, List
 
 from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_list, to_class
 
+
+@dataclass
+class NextAiringEpisode:
+    airing_at: Optional[int] = None
+    time_until_airing: Optional[int] = None
+    episode: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'NextAiringEpisode':
+        assert isinstance(obj, dict)
+        airing_at = from_union([from_int, from_none], obj.get("airingAt"))
+        time_until_airing = from_union([from_int, from_none], obj.get("timeUntilAiring"))
+        episode = from_union([from_int, from_none], obj.get("episode"))
+        return NextAiringEpisode(airing_at, time_until_airing, episode)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["airingAt"] = from_union([from_int, from_none], self.airing_at)
+        result["timeUntilAiring"] = from_union([from_int, from_none], self.time_until_airing)
+        result["episode"] = from_union([from_int, from_none], self.episode)
+        return result
+
+
 @dataclass
 class Title:
     romaji: Optional[str] = None
@@ -30,32 +53,32 @@ class Title:
 
 @dataclass
 class Media:
-    next_airing_episode: None
     id: Optional[int] = None
     banner_image: Optional[str] = None
     episodes: Optional[int] = None
     title: Optional[Title] = None
     site_url: Optional[str] = None
+    next_airing_episode: Optional[NextAiringEpisode] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Media':
         assert isinstance(obj, dict)
-        next_airing_episode = from_none(obj.get("nextAiringEpisode"))
         id = from_union([from_int, from_none], obj.get("id"))
         banner_image = from_union([from_none, from_str], obj.get("bannerImage"))
         episodes = from_union([from_int, from_none], obj.get("episodes"))
         title = from_union([Title.from_dict, from_none], obj.get("title"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
-        return Media(next_airing_episode, id, banner_image, episodes, title, site_url)
+        next_airing_episode = from_union([NextAiringEpisode.from_dict, from_none], obj.get("nextAiringEpisode"))
+        return Media(id, banner_image, episodes, title, site_url, next_airing_episode)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["nextAiringEpisode"] = from_none(self.next_airing_episode)
         result["id"] = from_union([from_int, from_none], self.id)
         result["bannerImage"] = from_union([from_none, from_str], self.banner_image)
         result["episodes"] = from_union([from_int, from_none], self.episodes)
         result["title"] = from_union([lambda x: to_class(Title, x), from_none], self.title)
         result["siteUrl"] = from_union([from_str, from_none], self.site_url)
+        result["nextAiringEpisode"] = from_union([lambda x: to_class(NextAiringEpisode, x), from_none], self.next_airing_episode)
         return result
 
 

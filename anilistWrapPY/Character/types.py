@@ -2,27 +2,29 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import Optional, Any, List
 
-from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_list, to_class
+from anilistWrapPY.utils import from_union, from_int, from_none, from_list, to_class, from_str, to_enum
 
 
 @dataclass
 class DateOfBirth:
     year: None
-    month: None
-    day: None
+    month: Optional[int] = None
+    day: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'DateOfBirth':
         assert isinstance(obj, dict)
         year = from_none(obj.get("year"))
-        month = from_none(obj.get("month"))
-        day = from_none(obj.get("day"))
+        month = from_union([from_int, from_none], obj.get("month"))
+        day = from_union([from_int, from_none], obj.get("day"))
         return DateOfBirth(year, month, day)
 
     def to_dict(self) -> dict:
-        result: dict = {"year": from_none(self.year), "month": from_none(self.month), "day": from_none(self.day)}
+        result: dict = {"year": from_none(self.year), "month": from_union([from_int, from_none], self.month),
+                        "day": from_union([from_int, from_none], self.day)}
         return result
 
 
@@ -39,6 +41,13 @@ class Image:
     def to_dict(self) -> dict:
         result: dict = {"large": from_union([from_str, from_none], self.large)}
         return result
+
+
+class Format(Enum):
+    MANGA = "MANGA"
+    NOVEL = "NOVEL"
+    OVA = "OVA"
+    TV = "TV"
 
 
 @dataclass
@@ -62,26 +71,31 @@ class Title:
         return result
 
 
+class TypeEnum(Enum):
+    ANIME = "ANIME"
+    MANGA = "MANGA"
+
+
 @dataclass
 class Node:
     title: Optional[Title] = None
-    type: Optional[str] = None
-    format: Optional[str] = None
+    type: Optional[TypeEnum] = None
+    format: Optional[Format] = None
     site_url: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Node':
         assert isinstance(obj, dict)
         title = from_union([Title.from_dict, from_none], obj.get("title"))
-        type = from_union([from_str, from_none], obj.get("type"))
-        format = from_union([from_str, from_none], obj.get("format"))
+        type = from_union([TypeEnum, from_none], obj.get("type"))
+        format = from_union([Format, from_none], obj.get("format"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
         return Node(title, type, format, site_url)
 
     def to_dict(self) -> dict:
         result: dict = {"title": from_union([lambda x: to_class(Title, x), from_none], self.title),
-                        "type": from_union([from_str, from_none], self.type),
-                        "format": from_union([from_str, from_none], self.format),
+                        "type": from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type),
+                        "format": from_union([lambda x: to_enum(Format, x), from_none], self.format),
                         "siteUrl": from_union([from_str, from_none], self.site_url)}
         return result
 
@@ -125,7 +139,7 @@ class Name:
 
 @dataclass
 class Character:
-    age: Optional[int] = None
+    age: None
     name: Optional[Name] = None
     description: Optional[str] = None
     image: Optional[Image] = None
@@ -137,9 +151,9 @@ class Character:
     @staticmethod
     def from_dict(obj: Any) -> 'Character':
         assert isinstance(obj, dict)
-        age = from_union([from_none, lambda x: int(from_str(x))], obj.get("age"))
+        age = from_none(obj.get("age"))
         name = from_union([Name.from_dict, from_none], obj.get("name"))
-        description = from_union([from_str, from_none], obj.get("description"))
+        description = from_union([from_none, from_str], obj.get("description"))
         image = from_union([Image.from_dict, from_none], obj.get("image"))
         media = from_union([Media.from_dict, from_none], obj.get("media"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
@@ -148,11 +162,9 @@ class Character:
         return Character(age, name, description, image, media, site_url, date_of_birth, favourites)
 
     def to_dict(self) -> dict:
-        result: dict = {"age": from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
-                                           lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))],
-                                          self.age),
+        result: dict = {"age": from_none(self.age),
                         "name": from_union([lambda x: to_class(Name, x), from_none], self.name),
-                        "description": from_union([from_str, from_none], self.description),
+                        "description": from_union([from_none, from_str], self.description),
                         "image": from_union([lambda x: to_class(Image, x), from_none], self.image),
                         "media": from_union([lambda x: to_class(Media, x), from_none], self.media),
                         "siteUrl": from_union([from_str, from_none], self.site_url),
@@ -193,23 +205,23 @@ class Data:
 
 
 @dataclass
-class AniListCharacter:
+class AnilistCharacter:
     data: Optional[Data] = None
 
     @staticmethod
-    def from_dict(obj: Any) -> 'AniListCharacter':
+    def from_dict(obj: Any) -> 'AnilistCharacter':
         assert isinstance(obj, dict)
         data = from_union([Data.from_dict, from_none], obj.get("data"))
-        return AniListCharacter(data)
+        return AnilistCharacter(data)
 
     def to_dict(self) -> dict:
         result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
         return result
 
 
-def ani_list_character_from_dict(s: Any) -> AniListCharacter:
-    return AniListCharacter.from_dict(s)
+def anilist_character_from_dict(s: Any) -> AnilistCharacter:
+    return AnilistCharacter.from_dict(s)
 
 
-def ani_list_character_to_dict(x: AniListCharacter) -> Any:
-    return to_class(AniListCharacter, x)
+def anilist_character_to_dict(x: AnilistCharacter) -> Any:
+    return to_class(AnilistCharacter, x)

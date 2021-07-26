@@ -42,3 +42,18 @@ def to_class(c: Type[T], x: Any) -> dict:
 def to_enum(c: Type[EnumT], x: Any) -> EnumT:
     assert isinstance(x, c)
     return x.value
+
+
+def from_float(x: Any) -> float:
+    assert isinstance(x, (float, int)) and not isinstance(x, bool)
+    return float(x)
+
+
+def to_float(x: Any) -> float:
+    assert isinstance(x, float)
+    return x
+
+
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
+    return x

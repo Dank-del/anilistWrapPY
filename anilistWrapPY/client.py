@@ -7,6 +7,7 @@ from anilistWrapPY.Manga.request import GetManga
 from anilistWrapPY.Anime.request import GetAnime
 from anilistWrapPY.Character.request import GetCharacter
 from anilistWrapPY.Media.request import GetMedia
+from anilistWrapPY.User.request import GetUser
 
 
 class aniWrapPYClient:
@@ -21,9 +22,12 @@ class aniWrapPYClient:
 
     def Character(self, query: str):
         return GetCharacter(search=query, baseUrl=self.baseUrl)
-    
+
     def Manga(self, query: str):
         return GetManga(search=query, baseUrl=self.baseUrl)
-    
+
     def Airing(self, query: str):
         return GetAiring(search=query, baseUrl=self.baseUrl)
+
+    def User(self, query: str):
+        return GetUser(search=query, baseUrl=self.baseUrl)

@@ -1,6 +1,7 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
+from anilistWrapPY.errors import Error
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Any, List
@@ -191,6 +192,7 @@ class Data:
 @dataclass
 class AnilistMedia:
     data: Optional[Data] = None
+    errors: Optional[List[Error]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AnilistMedia':
@@ -201,11 +203,3 @@ class AnilistMedia:
     def to_dict(self) -> dict:
         result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
         return result
-
-
-def anilist_media_from_dict(s: Any) -> AnilistMedia:
-    return AnilistMedia.from_dict(s)
-
-
-def anilist_media_to_dict(x: AnilistMedia) -> Any:
-    return to_class(AnilistMedia, x)

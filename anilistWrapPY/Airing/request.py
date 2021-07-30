@@ -2,17 +2,20 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 import httpx
-import json
 
 from anilistWrapPY.Airing.graphql import airing_query
-from anilistWrapPY.Airing.types import AnilistAiring, anilist_airing_from_dict
-from anilistWrapPY.errors import AniListException, ani_list_error_from_dict
+from anilistWrapPY.Airing.types import AnilistAiring
+from anilistWrapPY.errors import AniListException
 
 
 def GetAiring(search: str, baseUrl: str) -> AnilistAiring:
     variables = {"search": search}
-    r = (httpx.post(baseUrl, json={"query": airing_query, "variables": variables})).json()
+    req = httpx.post(baseUrl, json={"query": airing_query, "variables": variables})
+    if req.status_code != 200:
+        raise AniListException("Status code isn't 200")
+    r = req.json()
+    
     try:
-        return anilist_airing_from_dict(r)
-    except json.JSONDecodeError:
-        raise AniListException("{}".format(ani_list_error_from_dict(r)))
+        return AnilistAiring(**r)
+    except BaseException as e:
+        raise AniListException("{}".format(e))

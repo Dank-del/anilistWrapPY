@@ -2,17 +2,19 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 import httpx
-import json
 
 from anilistWrapPY.Anime.graphql import anime_query
-from anilistWrapPY.Anime.types import AniListAnime, ani_list_anime_from_dict
-from anilistWrapPY.errors import AniListException, ani_list_error_from_dict
+from anilistWrapPY.Anime.types import AniListAnime
+from anilistWrapPY.errors import AniListException
 
 
 def GetAnime(search: str, baseUrl: str) -> AniListAnime:
     variables = {"search": search}
-    r = (httpx.post(baseUrl, json={"query": anime_query, "variables": variables})).json()
+    req = httpx.post(baseUrl, json={"query": anime_query, "variables": variables})
+    if req.status_code != 200:
+        raise AniListException("Status code isn't 200")
+    r = req.json()
     try:
-        return ani_list_anime_from_dict(r)
-    except json.JSONDecodeError:
-        raise AniListException("{}".format(ani_list_error_from_dict(r)))
+        return AniListAnime(**r)
+    except BaseException as e:
+        raise AniListException("{}".format(e))

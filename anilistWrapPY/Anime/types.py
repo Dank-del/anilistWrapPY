@@ -1,6 +1,7 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
+from anilistWrapPY.errors.types import Error
 from dataclasses import dataclass
 from typing import Optional, Any, List
 
@@ -212,6 +213,7 @@ class Data:
 @dataclass
 class AniListAnime:
     data: Optional[Data] = None
+    errors: Optional[List[Error]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AniListAnime':
@@ -222,11 +224,3 @@ class AniListAnime:
     def to_dict(self) -> dict:
         result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
         return result
-
-
-def ani_list_anime_from_dict(s: Any) -> AniListAnime:
-    return AniListAnime.from_dict(s)
-
-
-def ani_list_anime_to_dict(x: AniListAnime) -> Any:
-    return to_class(AniListAnime, x)

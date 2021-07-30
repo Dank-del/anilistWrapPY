@@ -1,6 +1,7 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
+from anilistWrapPY.errors import Error
 from dataclasses import dataclass
 from typing import Optional, Any, List
 
@@ -126,6 +127,7 @@ class Data:
 @dataclass
 class AnilistManga:
     data: Optional[Data] = None
+    errors: Optional[List[Error]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AnilistManga':
@@ -137,11 +139,3 @@ class AnilistManga:
         result: dict = {}
         result["data"] = from_union([lambda x: to_class(Data, x), from_none], self.data)
         return result
-
-
-def anilist_manga_from_dict(s: Any) -> AnilistManga:
-    return AnilistManga.from_dict(s)
-
-
-def anilist_manga_to_dict(x: AnilistManga) -> Any:
-    return to_class(AnilistManga, x)

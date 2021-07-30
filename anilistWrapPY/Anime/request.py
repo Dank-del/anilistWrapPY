@@ -15,6 +15,6 @@ def GetAnime(search: str, baseUrl: str) -> AniListAnime:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AniListAnime(**r)
+        return AniListAnime.from_dict(r)
     except BaseException as e:
         raise AniListException("{}".format(e))

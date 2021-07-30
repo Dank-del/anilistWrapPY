@@ -1,8 +1,9 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
-character_query = '''query ($id: Int, $search: String) {
-  	Page (perPage: 10) {
+character_query = '''
+query ($id: Int, $search: String) {
+  	Page {
 	    characters (id: $id, search: $search) {
     	  name {
       	  full
@@ -12,6 +13,7 @@ character_query = '''query ($id: Int, $search: String) {
       	description
       	image {
           large
+          medium
         }
         media {
             nodes {
@@ -26,6 +28,7 @@ character_query = '''query ($id: Int, $search: String) {
             }
         }
       	siteUrl
+        id
       dateOfBirth {
         year
         month

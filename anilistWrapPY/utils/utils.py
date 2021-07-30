@@ -21,6 +21,7 @@ def from_union(fs, x):
             return f(x)
         except:
             pass
+    
     assert False
 
 

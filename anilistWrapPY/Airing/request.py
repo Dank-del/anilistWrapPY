@@ -16,6 +16,6 @@ def GetAiring(search: str, baseUrl: str) -> AnilistAiring:
     r = req.json()
     
     try:
-        return AnilistAiring(**r)
+        return AnilistAiring.from_dict(r)
     except BaseException as e:
         raise AniListException("{}".format(e))

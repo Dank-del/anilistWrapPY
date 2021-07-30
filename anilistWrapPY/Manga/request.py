@@ -15,6 +15,6 @@ def GetManga(search: str, baseUrl: str) -> AnilistManga:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AnilistManga(**r)
+        return AnilistManga.from_dict(r)
     except BaseException as e:
         raise AniListException("{}".format(e))

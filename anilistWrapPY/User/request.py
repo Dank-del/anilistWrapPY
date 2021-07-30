@@ -16,6 +16,6 @@ def GetUser(search: str, baseUrl: str) -> AnilistUser:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AnilistUser(**r)
+        return AnilistUser.from_dict(r)
     except BaseException as e:
         raise AniListException("{}".format(e))

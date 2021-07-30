@@ -1,13 +1,13 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
+from anilistWrapPY.utils.utils import to_enum
+from enum import Enum
 from anilistWrapPY.errors import Error
 from dataclasses import dataclass
-from enum import Enum
 from typing import Optional, Any, List
 
-from anilistWrapPY.utils import from_union, from_int, from_none, from_list, to_class, from_str, to_enum
-
+from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_list, to_class
 
 @dataclass
 class DateOfBirth:
@@ -24,31 +24,30 @@ class DateOfBirth:
         return DateOfBirth(year, month, day)
 
     def to_dict(self) -> dict:
-        result: dict = {"year": from_none(self.year), "month": from_union([from_int, from_none], self.month),
-                        "day": from_union([from_int, from_none], self.day)}
+        result: dict = {}
+        result["year"] = from_none(self.year)
+        result["month"] = from_union([from_int, from_none], self.month)
+        result["day"] = from_union([from_int, from_none], self.day)
         return result
 
 
 @dataclass
 class Image:
     large: Optional[str] = None
+    medium: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Image':
         assert isinstance(obj, dict)
         large = from_union([from_str, from_none], obj.get("large"))
-        return Image(large)
+        medium = from_union([from_str, from_none], obj.get("medium"))
+        return Image(large, medium)
 
     def to_dict(self) -> dict:
-        result: dict = {"large": from_union([from_str, from_none], self.large)}
+        result: dict = {}
+        result["large"] = from_union([from_str, from_none], self.large)
+        result["medium"] = from_union([from_str, from_none], self.medium)
         return result
-
-
-class Format(Enum):
-    MANGA = "MANGA"
-    NOVEL = "NOVEL"
-    OVA = "OVA"
-    TV = "TV"
 
 
 @dataclass
@@ -66,9 +65,10 @@ class Title:
         return Title(romaji, english, native)
 
     def to_dict(self) -> dict:
-        result: dict = {"romaji": from_union([from_str, from_none], self.romaji),
-                        "english": from_union([from_none, from_str], self.english),
-                        "native": from_union([from_str, from_none], self.native)}
+        result: dict = {}
+        result["romaji"] = from_union([from_str, from_none], self.romaji)
+        result["english"] = from_union([from_none, from_str], self.english)
+        result["native"] = from_union([from_str, from_none], self.native)
         return result
 
 
@@ -81,7 +81,7 @@ class TypeEnum(Enum):
 class Node:
     title: Optional[Title] = None
     type: Optional[TypeEnum] = None
-    format: Optional[Format] = None
+    format: Optional[str] = None
     site_url: Optional[str] = None
 
     @staticmethod
@@ -89,15 +89,16 @@ class Node:
         assert isinstance(obj, dict)
         title = from_union([Title.from_dict, from_none], obj.get("title"))
         type = from_union([TypeEnum, from_none], obj.get("type"))
-        format = from_union([Format, from_none], obj.get("format"))
+        format = from_union([from_str, from_none], obj.get("format"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
         return Node(title, type, format, site_url)
 
     def to_dict(self) -> dict:
-        result: dict = {"title": from_union([lambda x: to_class(Title, x), from_none], self.title),
-                        "type": from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type),
-                        "format": from_union([lambda x: to_enum(Format, x), from_none], self.format),
-                        "siteUrl": from_union([from_str, from_none], self.site_url)}
+        result: dict = {}
+        result["title"] = from_union([lambda x: to_class(Title, x), from_none], self.title)
+        result["type"] = from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type)
+        result["format"] = from_union([from_str, from_none], self.format)
+        result["siteUrl"] = from_union([from_str, from_none], self.site_url)
         return result
 
 
@@ -112,8 +113,8 @@ class Media:
         return Media(nodes)
 
     def to_dict(self) -> dict:
-        result: dict = {
-            "nodes": from_union([lambda x: from_list(lambda x: to_class(Node, x), x), from_none], self.nodes)}
+        result: dict = {}
+        result["nodes"] = from_union([lambda x: from_list(lambda x: to_class(Node, x), x), from_none], self.nodes)
         return result
 
 
@@ -132,45 +133,50 @@ class Name:
         return Name(full, native, alternative)
 
     def to_dict(self) -> dict:
-        result: dict = {"full": from_union([from_str, from_none], self.full),
-                        "native": from_union([from_str, from_none], self.native),
-                        "alternative": from_union([lambda x: from_list(from_str, x), from_none], self.alternative)}
+        result: dict = {}
+        result["full"] = from_union([from_str, from_none], self.full)
+        result["native"] = from_union([from_str, from_none], self.native)
+        result["alternative"] = from_union([lambda x: from_list(from_str, x), from_none], self.alternative)
         return result
 
 
 @dataclass
 class Character:
-    age: None
     name: Optional[Name] = None
     description: Optional[str] = None
     image: Optional[Image] = None
     media: Optional[Media] = None
     site_url: Optional[str] = None
+    id: Optional[int] = None
     date_of_birth: Optional[DateOfBirth] = None
+    age: Optional[str] = None
     favourites: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Character':
         assert isinstance(obj, dict)
-        age = from_none(obj.get("age"))
         name = from_union([Name.from_dict, from_none], obj.get("name"))
-        description = from_union([from_none, from_str], obj.get("description"))
+        description = from_union([from_str, from_none], obj.get("description"))
         image = from_union([Image.from_dict, from_none], obj.get("image"))
         media = from_union([Media.from_dict, from_none], obj.get("media"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
+        id = from_union([from_int, from_none], obj.get("id"))
         date_of_birth = from_union([DateOfBirth.from_dict, from_none], obj.get("dateOfBirth"))
+        age = from_union([from_str, from_none], obj.get("age"))
         favourites = from_union([from_int, from_none], obj.get("favourites"))
-        return Character(age, name, description, image, media, site_url, date_of_birth, favourites)
+        return Character(name, description, image, media, site_url, id, date_of_birth, age, favourites)
 
     def to_dict(self) -> dict:
-        result: dict = {"age": from_none(self.age),
-                        "name": from_union([lambda x: to_class(Name, x), from_none], self.name),
-                        "description": from_union([from_none, from_str], self.description),
-                        "image": from_union([lambda x: to_class(Image, x), from_none], self.image),
-                        "media": from_union([lambda x: to_class(Media, x), from_none], self.media),
-                        "siteUrl": from_union([from_str, from_none], self.site_url),
-                        "dateOfBirth": from_union([lambda x: to_class(DateOfBirth, x), from_none], self.date_of_birth),
-                        "favourites": from_union([from_int, from_none], self.favourites)}
+        result: dict = {}
+        result["name"] = from_union([lambda x: to_class(Name, x), from_none], self.name)
+        result["description"] = from_union([from_str, from_none], self.description)
+        result["image"] = from_union([lambda x: to_class(Image, x), from_none], self.image)
+        result["media"] = from_union([lambda x: to_class(Media, x), from_none], self.media)
+        result["siteUrl"] = from_union([from_str, from_none], self.site_url)
+        result["id"] = from_union([from_int, from_none], self.id)
+        result["dateOfBirth"] = from_union([lambda x: to_class(DateOfBirth, x), from_none], self.date_of_birth)
+        result["age"] = from_union([from_str, from_none], self.age)
+        result["favourites"] = from_union([from_int, from_none], self.favourites)
         return result
 
 
@@ -185,8 +191,8 @@ class Page:
         return Page(characters)
 
     def to_dict(self) -> dict:
-        result: dict = {"characters": from_union([lambda x: from_list(lambda x: to_class(Character, x), x), from_none],
-                                                 self.characters)}
+        result: dict = {}
+        result["characters"] = from_union([lambda x: from_list(lambda x: to_class(Character, x), x), from_none], self.characters)
         return result
 
 
@@ -201,7 +207,8 @@ class Data:
         return Data(page)
 
     def to_dict(self) -> dict:
-        result: dict = {"Page": from_union([lambda x: to_class(Page, x), from_none], self.page)}
+        result: dict = {}
+        result["Page"] = from_union([lambda x: to_class(Page, x), from_none], self.page)
         return result
 
 
@@ -217,5 +224,6 @@ class AnilistCharacter:
         return AnilistCharacter(data)
 
     def to_dict(self) -> dict:
-        result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
+        result: dict = {}
+        result["data"] = from_union([lambda x: to_class(Data, x), from_none], self.data)
         return result

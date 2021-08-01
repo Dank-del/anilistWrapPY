@@ -1,58 +1,158 @@
-# anilistWrapPY 
+<!--
+ * This file is part of anilistWrapPY (https://github.com/Dank-del/anilistWrapPY).
+ * Copyright (c) 2021 Sayan Biswas, ALiwoto.
+-->
+
+# <img src="https://avatars.githubusercontent.com/u/18018524?s=200&v=4" width="35px" align="left"></img> anilistWrapPY
+> Name:		anilistWrapPY	\
+> Version:	v0.0.12				\
+> Edit:		1 Aug 2021			\
+> By:		Dank-del(Sayan Biswas) (C)	
+
+-----------------------------------------------------------
+
 ![downloads](https://img.shields.io/pypi/dm/anilistWrapPY) ![ver](https://img.shields.io/pypi/v/anilistWrapPY)
-> A smol anilist wrapper for my personal use :p
 
-## Media
-![image](https://user-images.githubusercontent.com/63096193/125343065-4303d180-e373-11eb-8166-7a1345a82ab3.png)
+anilistWrapPY is an unofficial [python](https://python.org) wrapper for [anilist](https://anilist.co) API.
+
+### Table of contents:
+
+ * [Supported python versions](#supported-go-versions)
+ * [Features](#features)
+ * [Getting started](#getting-started)
+ * [How to use](#how-to-use)
+ * [Support and Contributions](#support-and-contributions)
+ * [Helpful Links](#links)
+ * [License](#license)
+
+
+<img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/798246901916499998.gif" width="350px"></img>
+
+<hr/>
+
+
+## Supported python versions
+
+This library, needs python 3.7 or higher version to be installed.
+
+<hr/>
+
+## Features
+
+- Uses official anilist API endpoints, which makes this library:
+   - Easy to update
+   - Guaranteed to match the docs
+   - No third party endpoints
+   - No need to serialize and deserialize data outside of library
+- It's in pure python, no need to install any kind of plugin or include any kind of additional files.
+- It uses GraphQL to fetch data on AniList servers. The AniList GraphQL API provides quick and powerful access to over 500k anime and manga entries, including character, staff, and live airing data.
+- Anilist Client: Using a client makes it easier to fetch every type of data you want from the servers. You only need to import client and you are ready to go!
+
+<hr/>
+
+## Getting started
+
+You can easily download the library with the standard `pip install` command:
+
+```bash
+pip install anilistWrapPY
 ```
->>> from anilistWrapPY.Media.request import GetMedia
->>> GetMedia("Talentless Nana")
-AniListMedia(data={'Page': {'media': [{'id': 117343, 'title': {'romaji': 'Munou na Nana', 'english': 'Talentless Nana', 'native': '無能なナナ'}, 'type': 'ANIME', 'format': 'TV', 'status': 'FINISHED', 'description': "It is the year 20XX. Earth has been assaulted by monsters known as 'the Enemy of Humanity'. In order to deal with this threat, special schools comprised of teenagers with extraordinary abilities were formed. These people, who came to be known as 'the Talented', have abilities that defy the rules of reality. Among these superpowered individuals was an outlier, someone who was sent to one 
-of these schools despite having no innate special abilities whatsoever. This is the story of our protagonist, who attempts to defeat the Enemies of Humanity through the use of intelligence and manipulation.\n", 'episodes': 13, 'bannerImage': 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/117343-w0m2gfOlQphZ.jpg', 'externalLinks': [{'url': 'https://munounanana.com/'}, {'url': 'https://twitter.com/munounanana'}, {'url': 'https://www.animelab.com/shows/talentless-nana'}, {'url': 'https://www.funimation.com/shows/talentless-nana/'}, {'url': 'https://www.youtube.com/playlist?list=PLwLSw1_eDZl2t0ExBn76ZdBomplZbeaay'}], 'duration': 24, 'chapters': None, 'volumes': None, 'genres': ['Drama', 'Horror', 'Psychological', 'Supernatural', 'Thriller'], 'synonyms': [], 'averageScore': 71, 'airingSchedule': {'nodes': []}, 'siteUrl': 'https://anilist.co/anime/117343'}, {'id': 99536, 'title': {'romaji': 'Munou na Nana', 'english': 'Talentless Nana', 'native': '無能なナナ'}, 'type': 'MANGA', 'format': 'MANGA', 'status': 'RELEASING', 'description': 'An academy on an island in unnavigable waters. There, students trained tirelessly, to fight back against the enemies of humanity. The protagonist, a student newly transferred there, also sets out with the intention of eradicating all enemies of humankind. An unpredictable, intellectual suspense story of justice and evil.<br><br>(Source: Crunchyroll)', 'episodes': None, 'bannerImage': 'https://s4.anilist.co/file/anilistcdn/media/manga/banner/99536-razqvMNL5k6E.jpg', 'externalLinks': [{'url': 'https://www.crunchyroll.com/comics/manga/talentless-nana/volumes'}], 'duration': None, 'chapters': None, 'volumes': None, 'genres': ['Drama', 'Horror', 'Psychological', 'Supernatural', 'Thriller'], 'synonyms': ['Munouna Nana'], 'averageScore': 71, 'airingSchedule': {'nodes': []}, 'siteUrl': 'https://anilist.co/manga/99536'}, {'id': 123803, 'title': {'romaji': 'Munou na Nana: Mini Anime', 'english': None, 'native': '無能なナナ ミニアニメ'}, 'type': 'ANIME', 'format': 'ONA', 'status': 'FINISHED', 'description': 'Mini anime for <i>Munou na Nana</i> released weekly on the official Twitter and website.', 'episodes': 12, 'bannerImage': None, 'externalLinks': [{'url': 'https://twitter.com/munounanana'}, {'url': 'https://munounanana.com/special/mini-anime.html'}], 'duration': 3, 'chapters': None, 'volumes': None, 'genres': [], 'synonyms': ['Talentless Nana: Mini Anime'], 'averageScore': 55, 'airingSchedule': {'nodes': []}, 'siteUrl': 'https://anilist.co/anime/123803'}, {'id': 131753, 'title': {'romaji': 'Zhiqu Yang Xuetang: Dong Zhi Wu Pian', 'english': 'Pleasant Goat Fun Class: Animals & Plants', 'native': '智趣羊学堂之动植物篇'}, 'type': 'ANIME', 'format': 'ONA', 'status': 'FINISHED', 'description': None, 'episodes': 26, 'bannerImage': None, 'externalLinks': [{'url': 'http://www.22dm.com/drama/dr_25.html'}, {'url': 'https://v.qq.com/detail/z/zsfymr17g4saqgq.html'}], 'duration': 6, 'chapters': None, 'volumes': None, 'genres': ['Adventure', 'Comedy'], 'synonyms': ['喜羊羊与灰太狼之智趣羊学堂（上部）'], 'averageScore': None, 'airingSchedule': {'nodes': []}, 'siteUrl': 'https://anilist.co/anime/131753'}, {'id': 94068, 'title': {'romaji': 'Inmitsu Gakuen', 'english': 'The indecent honey school', 'native': '淫蜜学園'}, 'type': 'MANGA', 'format': 'MANGA', 'status': 'FINISHED', 'description': '0-8. Inmitsu Gakuen\r\n9. Kansen Byoutou: Nurenure Seishiki Jisshuu no Maki\r\n10. Utsutsu na Present (Reality Present)\r\n11. Gohoubi Toilet\r\n12. Disasters High\r\n13. Shouten Hijack\r\n14. Odemukae\r\n15-16. Wartburg no Reijou-tachi\r\n17. Ryoujoku no Elevator\r\n18. 
-Shinya Hoiku: Inran Haha no Tsudoi\r\n19. Hentai Eigyou: Midara na Sales Lady\r\n20. Seiho Lady: Keiyaku no Himitsu\r\n21. Shanai Choukyou: Midara na Eigyou Lady\r\n22. Shinya Hoiku: Career Woman no Mikata', 'episodes': None, 'bannerImage': None, 'externalLinks': [], 'duration': None, 'chapters': 23, 'volumes': 1, 'genres': ['Hentai'], 'synonyms': ['Kansen Byoutou: Nurenure Seishiki Jisshuu no Maki', 
-'Reality Present', 'Gohoubi Toilet', 'Disasters High', 'Shouten Hijack', 'Odemukae', 'Wartburg no Reijou-tachi', 'Ryoujoku no Elevator', 'Shinya Hoiku: Inran Haha no Tsudoi', 'Hentai Eigyou: Midara na Sales Lady'], 'averageScore': None, 'airingSchedule': {'nodes': []}, 'siteUrl': 'https://anilist.co/manga/94068'}]}})
->>> 
-```
+
+You may want to visit our pypi page [here](https://pypi.org/project/anilistwrappy/).
+
+<hr/>
+
+## How to use
 
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-## Anime
-![image](https://user-images.githubusercontent.com/63096193/125342684-cf61c480-e372-11eb-98fb-dd557f3e32a9.png)
-```
->>> from anilistWrapPY.Anime.request import GetAnime
->>> GetAnime("Higehiro")
-AniListAnime(data={'Page': {'media': [{'id': 114232, 'title': {'romaji': 'Hige wo Soru. Soshite Joshikousei wo Hirou.', 'english': 'Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway', 'native': 'ひげを剃る。そして女子高生を拾う。'}, 'description': 'On his way home from drinking his sorrows away after being rejected by his crush, the 26 year old salaryman, Yoshida, finds a high school girl named Sayu sitting on the side of the road. Yoshida is completely drunk out of his mind and ends up letting Sayu stay at his place overnight. Not having the heart to put Sayu out on the streets since she ran away from home, Yoshida allows her to stay at his place... And so began the awkward, irritable, and slightly heartwarming relationship between a runaway high school girl and a salaryman living together.<br>\n<br>\n(Source: Crunchyroll)', 'startDate': {'year': 2021}, 'episodes': 13, 'season': 'SPRING', 'type': 'ANIME', 'format': 'TV', 'status': 'FINISHED', 'duration': 24, 'siteUrl': 
-'https://anilist.co/anime/114232', 'studios': {'nodes': [{'name': 'project No.9'}, {'name': 'Dream Shift'}, {'name': 'Pony Canyon'}, {'name': 'Magic Capsule'}]}, 'trailer': {'id': 'nFljVg8xELU', 'site': 'youtube', 'thumbnail': 'https://i.ytimg.com/vi/nFljVg8xELU/hqdefault.jpg'}, 'externalLinks': [{'url': 'https://twitter.com/higehiro_anime/'}, {'url': 'http://www.higehiro-anime.com/'}, {'url': 'https://www.crunchyroll.com/higehiro-after-being-rejected-i-shaved-and-took-in-a-high-school-runaway'}, {'url': 'https://vrv.co/series/GXJHM3NW5/Higehiro-After-Being-Rejected-I-Shaved-and-Took-in-a-High-School-Runaway'}, {'url': 'https://www.youtube.com/playlist?list=PLwLSw1_eDZl04kRKOrkNNvS1Yht4lZ8QK'}], 'averageScore': 73, 'genres': ['Drama', 'Romance', 'Slice of Life'], 'bannerImage': 'https://s4.anilist.co/file/anilistcdn/media/anime/banner/114232-lWTVDRDLqAH1.jpg'}, {'id': 5983, 'title': {'romaji': 'Higepiyo', 'english': None, 'native': 'ひげぴよ'}, 'description': 'Higepiyo is a little chick with a mustache, who is seeking to aquire masculinity with his friend Hiroshi but ends up being entangled with a skin of heated milk.', 'startDate': {'year': 2009}, 'episodes': 39, 'season': 'SPRING', 'type': 'ANIME', 'format': 'TV_SHORT', 'status': 'FINISHED', 'duration': 5, 'siteUrl': 'https://anilist.co/anime/5983', 'studios': {'nodes': [{'name': 'Aniplex'}, {'name': 'Kinema Citrus'}]}, 'trailer': None, 'externalLinks': [], 'averageScore': 61, 'genres': ['Comedy'], 'bannerImage': None}]}})
->>> 
-```
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/soulgem-homura.gif" width="15px"></img> [Airing](#Airing)
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/soulgem-kyoko.gif" width="15px"></img> [Anime](#Anime)
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/soulgem-madoka.gif" width="15px"></img> [Character](#Character)
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/soulgem-mami.gif" width="15px"></img> [Manga](#Manga)
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/soulgem-sayaka.gif" width="15px"></img> [Media](#Media)
+ - <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/Yayyyyyyyyy.png" width="15px"></img> [User](#User)
 
 
-# New in 0.0.3 
-> Anilist Client 
+### Airing:
 
-**Usage:**
-```
+```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> print(c.Anime("higehiro"))
-AniListAnime(data={'Page': {'media': [{'id': 114232, 'title': {'romaji': 'Hige wo Soru. Soshite Joshikousei wo Hirou.', 'english': 'Higehiro: After Being Rejected, I Shaved and Took in 
-a High School Runaway', 'native': 'ひげを剃る。そして女子高生を拾う。'}, 'description': 'On his way home from drinking his sorrows away after being rejected by his crush, the 26 year ola High School Rund salaryman, Yoshida, finds a high school girl named Sayu sitting on the side of the road. Yoshida is completely drunk out of his mind and ends up letting Sayu stay at his place overnigida, finds a highht. Not having the heart to put Sayu out on the streets since she ran away from home, Yoshida allows her to stay at his place... And so began the awkward, irritable, and slightly heartwyu out on the strarming relationship between a runaway high school girl and a salaryman living together.<br>\n<br>\n(Source: Crunchyroll)', 'startDate': {'year': 2021}, 'episodes': 13, 'season': 'SPRINGirl and a salarym', 'type': 'ANIME', 'format': 'TV', 'status': 'FINISHED', 'duration': 24, 'siteUrl': 'https://anilist.co/anime/114232', 'studios': {'nodes': [{'name': 'project No.9'}, {'name': 'Dream S: 24, 'siteUrl': hift'}, {'name': 'Pony Canyon'}, {'name': 'Magic Capsule'}]}, 'trailer': {'id': 'nFljVg8xELU', 'site': 'youtube', 'thumbnail': 'https://i.ytimg.com/vi/nFljVg8xELU/hqdefault.jpg'}, 'exteVg8xELU', 'site':rnalLinks': [{'url': 'https://twitter.com/higehiro_anime/'}, {'url': 'http://www.higehiro-anime.com/'}, {'url': 'https://www.crunchyroll.com/higehiro-after-being-rejected-i-shaved-and-t, {'url': 'https:ook-in-a-high-school-runaway'}, {'url': 'https://vrv.co/series/GXJHM3NW5/Higehiro-After-Being-Rejected-I-Shaved-and-Took-in-a-High-School-Runaway'}, {'url': 'https://www.youtube.com/plak-in-a-High-Schooylist?list=PLwLSw1_eDZl04kRKOrkNNvS1Yht4lZ8QK'}], 'averageScore': 73, 'genres': ['Drama', 'Romance', 'Slice of Life'], 'bannerImage': 'https://s4.anilist.co/file/anilistcdn/media/anime/ttps://s4.anilistbanner/114232-lWTVDRDLqAH1.jpg'}, {'id': 5983, 'title': {'romaji': 'Higepiyo', 'english': None, 'native': 'ひげぴよ'}, 'description': 'Higepiyo is a little chick with a mustache, who isle chick with a m seeking to aquire masculinity with his friend Hiroshi but ends up being entangled with a skin of heated milk.', 'startDate': {'year': 2009}, 'episodes': 39, 'season': 'SPRING', 'type':PRING', 'type': ' 'ANIME', 'format': 'TV_SHORT', 'status': 'FINISHED', 'duration': 5, 'siteUrl': 'https://anilist.co/anime/5983', 'studios': {'nodes': [{'name': 'Aniplex'}, {'name': 'Kinema Citrus'}]}, railer': None, 'e
-'trailer': None, 'externalLinks': [], 'averageScore': 61, 'genres': ['Comedy'], 'bannerImage': None}]}})
->>> print(c.Character("chizuru"))             
-AniListCharacter(data={'Page': {'characters': [{'name': {'full': 'Chizuru Ichinose', 'native': '一ノ瀬ちづる', 'alternative': ['Chizuru Mizuhara (水原千鶴)']}, 'description': '__Height:__ 169cm\n\nChizuru Ichinose, alternatively known as Chizuru Mizuhara in her "rental girlfriend" persona, is the main female protagonist of the Kanojo, Okarishimasu series. She is a college student at Nerima University who is majoring in Literature and she currently lives in Room 204 of Royal Hills Nerima, just next to [Kazuya Kinoshita](https://anilist.co/character/128105/Kazuya-Kinoshita).', 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b128106-1Gf64rjTWY8w.png'}, 'media': {'nodes': [{'title': {'romaji': 'Kanojo, Okarishimasu', 'english': 'Rent-A-Girlfriend', 'native': '彼女、お借りします'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/99943'}, {'title': {'romaji': 'Kanojo, Okarishimasu', 'english': 'Rent-a-Girlfriend', 'native': '彼女、お借りします'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/113813'}, {'title': {'romaji': 'Kanojo, Hitomishirimasu', 'english': 'Rent-a-(Really Shy!)-Girlfriend', 'native': '彼女、人見知ります'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/119767'}, {'title': {'romaji': 'Kanojo, Okarishimasu: Koushiki Anthology Comic', 'english': None, 'native': '彼女、お借りします\u3000公式アンソロジーコミック'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/123008'}, {'title': {'romaji': 'Kanojo, Okarishimasu Collab Mini Animation', 'english': None, 'native': '彼女、お借りします コラボミニアニメーシ 
-ョン'}, 'type': 'ANIME', 'format': 'ONA', 'siteUrl': 'https://anilist.co/anime/123464'}, {'title': {'romaji': 'Kanojo, Okarishimasu Petit', 'english': None, 'native': '彼女、お借りしま 
-す ぷち'}, 'type': 'ANIME', 'format': 'ONA', 'siteUrl': 'https://anilist.co/anime/123901'}, {'title': {'romaji': 'Kanojo, Okarishimasu 2', 'english': None, 'native': '彼女、お借りします
-2'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/124410'}, {'title': {'romaji': 'Kanojo, Tensei Shimasu', 'english': None, 'native': '彼女、転生します'}, 'type': 'MANGA', 'format': 'ONE_SHOT', 'siteUrl': 'https://anilist.co/manga/125013'}]}, 'siteUrl': 'https://anilist.co/character/128106', 'dateOfBirth': {'year': None, 'month': 4, 'day': 19}, 'age': '19', 'favourites': 5605}, {'name': {'full': 'Chizuru Hishiro', 'native': '日代千鶴', 'alternative': ['Hishiron']}, 'description': "A prodigy who has the best grades among the 
-girls in her class. She's extremely bad at communication. She has a habit of immediately looking up anything she doesn't understand on the internet.", 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b89426-9VS3dWDKDs4v.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'ReLife', 'english': 'ReLIFE', 'native': 'ReLIFE'}, 'type': 'ANIME', 'format': 'ONA', 'siteUrl': 'https://anilist.co/anime/21049'}, {'title': {'romaji': 'ReLife', 'english': 'ReLIFE', 'native': 'リライフ'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/85849'}, {'title': {'romaji': 'ReLIFE: Kanketsu-hen', 'english': 'ReLIFE: Final Arc', 'native': 'ReLIFE 完結編'}, 'type': 'ANIME', 'format': 'OVA', 'siteUrl': 'https://anilist.co/anime/98635'}]}, 'siteUrl': 'https://anilist.co/character/89426', 'dateOfBirth': {'year': None, 'month': 12, 'day': 25}, 'age': '17', 'favourites': 1474}, {'name': {'full': 
-'Chizuru Yoshida', 'native': '吉田千鶴', 'alternative': ['Chizu', 'Chi']}, 'description': '__Nickname:__ Chizu  \n__Height:__ 1.67 m  \n__Weight:__ 53 kg  \n__Blood Type:__ A  \n__Birthday:__ June 1st  \n__Horoscope:__ Gemini  \n__Life philosophy:__ "Eat until 80% full"  \n\nYoshida Chizuru is another close friend of Sawako. She is the energetic girl of the group.  ~!In Kurumi\'s fake rumors it was passed around that she was a former Yankee. She is a close childhood friend with Ryuu Sanada, who is also the son of the owner of her favorite ramen shop, they are best friends and they even say brothers, she argues about who is the older. She went to Kazehaya\'s middle school as well. She has a crush on Ryuu\'s brother, Tooru. Chizuru 
-is mostly only the slower side of things; she did not realize that Kazehaya liked Sawako (even though she and Ayane planned many events for them) until late in the series, after the 2nd year in their school has started.!~', 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b13532-9xdtRTIdE0UW.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'Kimi ni Todoke', 'english': 'Kimi ni Todoke: From Me to You', 'native': '君に届け'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/6045'}, {'title': {'romaji': 'Kimi ni Todoke 2nd Season', 'english': 'Kimi ni Todoke: From Me To You Season 2', 'native': '君に届け 2ND SEASON'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/9656'}, {'title': {'romaji': 'Kimi ni Todoke 2nd Season Specials', 'english': None, 'native': '君に届け ミニトド劇場'}, 'type': 'ANIME', 'format': 'SPECIAL', 'siteUrl': 'https://anilist.co/anime/10536'}, {'title': {'romaji': 'Kimi ni Todoke', 'english': 'Kimi ni Todoke: From Me to You', 'native': '君に届け'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/33378'}]}, 'siteUrl': 'https://anilist.co/character/13532', 'dateOfBirth': {'year': None, 'month': 6, 'day': 1}, 'age': None, 'favourites': 346}, {'name': {'full': 'Chizuru 
-Tachibana', 'native': '立花千鶴', 'alternative': ['']}, 'description': 'B：87\u3000W：56\u3000H：85', 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b135231-aeA1xsueoUcy.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'Nande Koko ni Sensei ga!?', 'english': 'Why the hell are you here, Teacher!?', 'native': 'なんでここに先生が!?'}, 'type': 'ANIME', 'format': 'TV_SHORT', 'siteUrl': 'https://anilist.co/anime/104325'}, {'title': {'romaji': 'Nande Koko ni Sensei ga!?', 'english': 'Why the Hell Are You Here, Teacher?!', 'native': 'なんでここに先生が!?'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/97827'}, {'title': {'romaji': 'Nande Koko ni Sensei ga!? Special', 'english': 'Why the hell are you here, Teacher!?: Thirteenth Period', 'native': 'なんでここに先生が!?'}, 'type': 'ANIME', 'format': 'SPECIAL', 'siteUrl': 'https://anilist.co/anime/113924'}]}, 'siteUrl': 
-'https://anilist.co/character/135231', 'dateOfBirth': {'year': None, 'month': None, 'day': None}, 'age': None, 'favourites': 310}, {'name': {'full': 'Chizuru Takano', 'native': '高野千 
-鶴', 'alternative': ['Chii-chan']}, 'description': "She is seemingly emotionless girl from class 2-4 and is a member of the wind instruments club. She says she has no interest in love because she doesn't understand it.\n~!She will start to have strange emotions towards her classmate Sugawara.!~", 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b123048-JpHtXehF4ZhB.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'Tsurezure Children', 'english': 'Tsuredure Children', 'native': '徒然チルドレン'}, 'type': 'ANIME', 'format': 'TV_SHORT', 'siteUrl': 'https://anilist.co/anime/98291'}, {'title': {'romaji': 'Tsurezure Children', 'english': 'Tsuredure Children', 'native': '徒然チルドレン'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/86481'}]}, 'siteUrl': 'https://anilist.co/character/123048', 'dateOfBirth': {'year': None, 'month': None, 'day': None}, 'age': None, 'favourites': 168}, {'name': {'full': 'Chizuru Minamoto', 'native': '源 ちずる', 'alternative': ['']}, 'description': "**Age**: 400+ (may be 1,000+)\n**Race**: Kitsune\n**Likes**: [Kouta Oyamada](https://anilist.co/character/10912/Kouta-Oyamada)\n**Dislikes**: [Nozomu Ezomori](https://anilist.co/character/10900/Nozomu-Ezomori)\n**Relatives**: [Tamamo](https://anilist.co/character/12857/Tamamo) (mother), [Tayura Minamoto](https://anilist.co/character/10946/Tayura-Minamoto) (younger brother)\n~!\n**Relatives (spoilers)**: Kouta (husband), unnamed daughter (manga only)\n!~\n\nChizuru Minamoto is a powerful kitsune who is a second-year student at the school Kouta attends. She appears to be a normal girl but is a 400-year-old powerful fox 
-diety.\n\nChizuru's hair is black. When she transforms, her hair turns blonde, she gains fox ears and a tail.\n\nChizuru constantly hangs around with Kouta, him being her love interest. She's very straightforward, making sexual suggestions and assertions towards him. She gets upset and throws a tantrum when someone else gets close to him (such as Nozomu).\n\nThroughout the series, Chizuru has displayed several powers and abilities.\n\n- **Transformation**: Chizuru can shift between her human form or kitsune form at will.\n- **Kitsune Physiology**: Being from a bloodline of powerful kitsune, Chizuru can transform to reach her full power and strength.\n- **Fox Fire**: Chizuru can emit powewrful blue fox flames.\n- **Fusion**: Chizuru merged with Kouta by kissing him. She enters his body where she gains the ability to use her 5 tailed-kitsune powers.\n\n(Source: Kanokon Wiki, edited)", 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b10902-AFAJPqLlNGqp.png'}, 'media': {'nodes': [{'title': {'romaji': 'Kanokon', 'english': 'Kanokon: The Girl Who Cried Fox', 'native': 'かの
-こん'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/3503'}, {'title': {'romaji': 'Kanokon Specials', 'english': None, 'native': 'かのこん'}, 'type': 'ANIME', 'format': 'SPECIAL', 'siteUrl': 'https://anilist.co/anime/4760'}, {'title': {'romaji': 'Kanokon: Manatsu no Dai Shanikusai', 'english': None, 'native': 'かのこん ～真夏の大謝肉祭～'}, 'type': 'ANIME', 'format': 'OVA', 'siteUrl': 'https://anilist.co/anime/6791'}, {'title': {'romaji': 'Kanokon', 'english': None, 'native': 'かのこん'}, 'type': 'MANGA', 'format': 'NOVEL', 
-'siteUrl': 'https://anilist.co/manga/31687'}, {'title': {'romaji': 'Kanokon', 'english': None, 'native': 'かのこん'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/33884'}]}, 'siteUrl': 'https://anilist.co/character/10902', 'dateOfBirth': {'year': None, 'month': None, 'day': None}, 'age': None, 'favourites': 59}, {'name': {'full': 'Chizuru Tachibana', 'native': '橘千鶴', 'alternative': ['']}, 'description': '__Age__: 16-17. \n\nSome years ago he visited Japan. He happened to meet Yuuki and Yuuta in the process. Initially when he met Masaki Sato, he claimed that she was not cute because she was violent and always reject other people\'s kindness. However as the story developed, he began to fall in love with Masaki and even get jealous when Masaki only talks to Shun.\n\n   __Height__: 165 cm (5\'4")\n\n  __Blood Type__: O\n\n  __Birthday__: August 11th\n\n  __Likes__: Playing, curry rice, snack foods.\n\n  __Dislikes__: Studying\n\n\n  Chizuru is half-Japanese and used to live in Germany. When he was a child he came to Japan for a short time and became friends with Yuuki. Although at that time he didn\'t know any Japanese, when he later moved to Japan during the second year of high school he was already fluent in Japanese.   Chizuru has a very cheerful personality and is a bit of an idiot. He has a huge complex about his height and does not like his shortness to be pointed out.   Chizuru has a crush on Masaki though he is well aware she likes Shun.', 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/n24206-yGYu79J3qYll.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'Kimi to Boku.', 'english': 'You and Me.', 'native': '君と僕。'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/10460'}, {'title': {'romaji': 'Kimi to Boku. 2', 'english': 'You and Me 2', 'native': '君と僕。2'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/11739'}, {'title': {'romaji': 'Kimi to Boku.', 'english': None, 'native': '君と僕。'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/38557'}]}, 'siteUrl': 'https://anilist.co/character/24206', 'dateOfBirth': {'year': None, 'month': 8, 'day': 11}, 'age': None, 'favourites': 56}, {'name': {'full': 'Chizuru Ooshima', 'native': '大島千づる', 'alternative': ['Oojima', 'Chizuru Oshima']}, 'description': " __Birthday:__ January 19  \n__Blood type:__ A  \n__Height:__ 165cm  \n\nShe is a member of the committee class, chosen because she wears glasses. She was helped by Yoshida Haru, and after been cheered her up by Haru, she fell in love with him. She is very shy, a little pessimistic, and anxious, and even though she likes Haru, she always gives him advice when he can't understand Shizuku.", 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b54827-vhCSSSJnXQWD.png'}, 'media': {'nodes': [{'title': {'romaji': 'Tonari no Kaibutsu-kun', 'english': 'My Little Monster', 'native': 'となりの怪物くん'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/14227'}, {'title': {'romaji': 'Tonari no Kaibutsu-kun: Tonari no Gokudou-kun', 'english': None, 'native': 'となりの極道くん'}, 'type': 'ANIME', 'format': 'OVA', 'siteUrl': 'https://anilist.co/anime/16866'}, {'title': {'romaji': 'Tonari no Kaibutsu-kun', 'english': 'My Little Monster', 'native': 'となりの怪物くん'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/43702'}]}, 'siteUrl': 'https://anilist.co/character/54827', 'dateOfBirth': {'year': None, 'month': 1, 'day': 19}, 'age': None, 'favourites': 42}, {'name': {'full': 'Chizuru Maru', 'native': '丸流千鶴', 'alternative': ['']}, 'description': None, 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/b128481-0iSloHZL6iwk.png'}, 'media': {'nodes': [{'title': {'romaji': 'Kishuku Gakkou no Juliet', 'english': 'Boarding School Juliet', 'native': '寄宿学校のジュリエット'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/101310'}, {'title': {'romaji': 'Kishuku Gakkou no 
-Juliet', 'english': 'Boarding School Juliet', 'native': '寄宿学校のジュリエット'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/86279'}]}, 'siteUrl': 'https://anilist.co/character/128481', 'dateOfBirth': {'year': None, 'month': 4, 'day': 27}, 'age': None, 'favourites': 38}, {'name': {'full': 'Chizuru Akaba', 'native': '紅葉知弦', 'alternative': ['']}, 'description': 'Age: 17  Class: 3rd year  Council Position: Secretary  Height: 170 cm  Weight: 53 kg  Hobbies: Controlling Kurimu, Sadistic activities   Chizuru has a tall and model-like figure and is a mature woman who seems to spend most of her time being quite serious. However, she has a sadistic side to her, which is shown when she "brain-washes" Ken and Kurimu. Also, she makes a lot of references to her sadism in the anime. She loves to cuddle and "abuse" the President (Kurimu) in a little sister way, and is an avid reader. Sometimes, it is hinted towards her wanting to be involved with Kurimu. She is hinted towards having a couple part-time jobs despite being too young legally to even have a job. While she is identified as the cool, serious type, she can embrace her more cutsy side to her once hopping around dressed as a cute sheep. Chizuru and Ken met in autumn when Ken was suffering from a broken heart. Their meeting healed it and showed him compassion for others. Like the season she represents, she always seems a bit gloomy and hard to approach but has a certain elegance to her.   (Source: Wikipedia) ', 'image': {'large': 'https://s4.anilist.co/file/anilistcdn/character/large/26031.jpg'}, 'media': {'nodes': [{'title': {'romaji': 'Seitokai no Ichizon', 'english': "Student Council's Discretion", 'native': '生徒会の一存'}, 'type': 'ANIME', 'format': 'TV', 'siteUrl': 'https://anilist.co/anime/5909'}, {'title': {'romaji': 'Seitokai no Ichizon Lv.2', 'english': "Student Council's Discretion Level 2", 'native': '生徒会の一存 Lv.2'}, 'type': 'ANIME', 'format': 'ONA', 'siteUrl': 'https://anilist.co/anime/10464'}, {'title': {'romaji': 'Seitokai no Ichizon', 'english': None, 'native': '生徒会の一存'}, 'type': 'MANGA', 'format': 'NOVEL', 'siteUrl': 'https://anilist.co/manga/42243'}, {'title': {'romaji': 'Seitokai no Ichizon', 'english': None, 'native': '生徒会の一存'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/45222'}, {'title': {'romaji': 'Seitokai Series Spinoffs', 'english': None, 'native': '生徒会の日常'}, 'type': 'MANGA', 'format': 'NOVEL', 'siteUrl': 'https://anilist.co/manga/47357'}, {'title': {'romaji': 'Boku wa Tomodachi ga Sukunai x Seitokai no Ichizon Crossover Special', 'english': None, 'native': '『僕は友達が少ない』×『生徒会の一存』コラボコミック'}, 'type': 'MANGA', 'format': 'MANGA', 'siteUrl': 'https://anilist.co/manga/70015'}, {'title': {'romaji': 'Hekiyou Gakuen Seitokai Mokushiroku', 'english': None, 'native': '碧陽学園生徒会黙示録'}, 'type': 'MANGA', 'format': 'NOVEL', 'siteUrl': 'https://anilist.co/manga/127676'}]}, 'siteUrl': 'https://anilist.co/character/26031', 'dateOfBirth': {'year': None, 'month': None, 'day': None}, 'age': None, 'favourites': 35}]}})
->>>
+>>> c.GetAiring("magia record - Kakusei Zenya")
 ```
+
+### Anime
+
+```py
+>>> from anilistWrapPY import aniWrapPYClient
+>>> c = aniWrapPYClient()
+>>> c.GetAnime("Kanojo mo kanojo")
+```
+
+### Character
+
+```py
+>>> from anilistWrapPY import aniWrapPYClient
+>>> c = aniWrapPYClient()
+>>> c.GetCharacter("adashino benio")
+```
+
+### Manga
+
+```py
+>>> from anilistWrapPY import aniWrapPYClient
+>>> c = aniWrapPYClient()
+>>> c.GetManga("One Piece")
+```
+
+### Media
+
+```py
+>>> from anilistWrapPY import aniWrapPYClient
+>>> c = aniWrapPYClient()
+>>> c.GetMedia("Talentless Nana")
+```
+
+### User
+
+```py
+>>> from anilistWrapPY import aniWrapPYClient
+>>> c = aniWrapPYClient()
+>>> c.GetUser("mimiee")
+```
+
+
+<hr/>
+
+
+## Support and Contributions
+
+ * If you think you have found a bug or have a feature request, feel free to use our [issue tracker](https://github.com/Dank-del/anilistWrapPY/issues). Before opening a new issue, please search to see if your problem has already been reported or not.  Try to be as detailed as possible in your issue reports.
+
+ * If you need help using AniList APIs or have other questions about this library, we suggest you to join our [telegram community](https://t.me/chiruzon).  Please do not use the GitHub issue tracker for personal support requests.
+
+ * Having a problem with library? Wanna talk with repository's owner? Contact the [Maintainer](https://t.me/dank_as_fuck)!
+
+ * Want to have a cool multi-purpose Telegram bot in your groups? You can add [Nana[ナナ]](https://t.me/TheTalentlessBot) with full features of AniList API!
+
+
+ 
+
+
+<hr/>
+
+## Links
+
+ * [Official website](https://anilist.co)
+ * [AniList github org](https://github.com/AniList)
+ * [AniList GraphQL docs](https://github.com/AniList/ApiV2-GraphQL-Docs)
+ * [Support chat](https://t.me/chiruzon)
+ * [Maintainer's Telegram](https://t.me/dank_as_fuck)
+ * [Nana [ナナ]](https://t.me/TheTalentlessBot)
+
+<hr/>
+
+## License
+
+<img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/Something_that_looks_like_Diamond.png" width="25px"></img> The anilistWrapPY project is under the [Unlicense License](http://unlicense.org/). You can find the license file [here](LICENSE).
 

@@ -21,3 +21,6 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# woto files:
+woto_files

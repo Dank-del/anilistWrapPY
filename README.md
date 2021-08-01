@@ -17,7 +17,7 @@ anilistWrapPY is an unofficial [python](https://python.org) wrapper for [anilist
 
 ### Table of contents:
 
- * [Supported python versions](#supported-go-versions)
+ * [Supported python versions](#supported-python-versions)
  * [Features](#features)
  * [Getting started](#getting-started)
  * [How to use](#how-to-use)
@@ -156,3 +156,5 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 
 <img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/Something_that_looks_like_Diamond.png" width="25px"></img> The anilistWrapPY project is under the [Unlicense License](http://unlicense.org/). You can find the license file [here](LICENSE).
 
+
+<img src="https://raw.githubusercontent.com/ALiwoto/ALiwoto/main/resources/etc/anilistwrappy_banner01.png" width="225px" height="350px"></img>

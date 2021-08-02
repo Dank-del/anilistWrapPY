@@ -154,7 +154,4 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 
 ## License
 
-<img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/Something_that_looks_like_Diamond.png" width="25px"></img> The anilistWrapPY project is under the [Unlicense License](http://unlicense.org/). You can find the license file [here](LICENSE).
-
-
-<img src="https://raw.githubusercontent.com/ALiwoto/ALiwoto/main/resources/etc/anilistwrappy_banner01.png" width="225px" height="350px"></img>
+<img src="https://raw.githubusercontent.com/aliwoto/aliwoto/main/resources/Something_that_looks_like_Diamond.png" width="25px"></img> The anilistWrapPY project is under the [Unlicense](http://unlicense.org/). You can find the license file [here](LICENSE).

@@ -1,3 +1,6 @@
+# The contents of this file is free and unencumbered software released into the
+# public domain. For more information, please refer to <http://unlicense.org/>
+
 from enum import Enum
 from typing import TypeVar, Any, Callable, List, cast, Type
 

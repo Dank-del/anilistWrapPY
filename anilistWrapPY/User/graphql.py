@@ -11,7 +11,7 @@ query($id: Int, $name: String) {
 			large
 		}
 		bannerImage
-		about
+		about (asHtml: true)
 		isFollowing
 		isFollower
 		donatorTier

@@ -11,21 +11,21 @@ from anilistWrapPY.utils import from_union, from_str, from_none, from_int, from_
 
 @dataclass
 class DateOfBirth:
-    year: None
+    year: Optional[int] = None
     month: Optional[int] = None
     day: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'DateOfBirth':
         assert isinstance(obj, dict)
-        year = from_none(obj.get("year"))
+        year = from_union([from_int, from_none], obj.get("year"))
         month = from_union([from_int, from_none], obj.get("month"))
         day = from_union([from_int, from_none], obj.get("day"))
         return DateOfBirth(year, month, day)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["year"] = from_none(self.year)
+        result["year"] = from_union([from_int, from_none], self.year)
         result["month"] = from_union([from_int, from_none], self.month)
         result["day"] = from_union([from_int, from_none], self.day)
         return result
@@ -60,27 +60,22 @@ class Title:
     def from_dict(obj: Any) -> 'Title':
         assert isinstance(obj, dict)
         romaji = from_union([from_str, from_none], obj.get("romaji"))
-        english = from_union([from_none, from_str], obj.get("english"))
+        english = from_union([from_str, from_none], obj.get("english"))
         native = from_union([from_str, from_none], obj.get("native"))
         return Title(romaji, english, native)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["romaji"] = from_union([from_str, from_none], self.romaji)
-        result["english"] = from_union([from_none, from_str], self.english)
+        result["english"] = from_union([from_str, from_none], self.english)
         result["native"] = from_union([from_str, from_none], self.native)
         return result
-
-
-class TypeEnum(Enum):
-    ANIME = "ANIME"
-    MANGA = "MANGA"
 
 
 @dataclass
 class Node:
     title: Optional[Title] = None
-    type: Optional[TypeEnum] = None
+    type: Optional[str] = None
     format: Optional[str] = None
     site_url: Optional[str] = None
 
@@ -88,7 +83,7 @@ class Node:
     def from_dict(obj: Any) -> 'Node':
         assert isinstance(obj, dict)
         title = from_union([Title.from_dict, from_none], obj.get("title"))
-        type = from_union([TypeEnum, from_none], obj.get("type"))
+        type = from_union([from_str, from_none], obj.get("type"))
         format = from_union([from_str, from_none], obj.get("format"))
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
         return Node(title, type, format, site_url)
@@ -96,7 +91,7 @@ class Node:
     def to_dict(self) -> dict:
         result: dict = {}
         result["title"] = from_union([lambda x: to_class(Title, x), from_none], self.title)
-        result["type"] = from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type)
+        result["type"] = from_union([from_str, from_none], self.type)
         result["format"] = from_union([from_str, from_none], self.format)
         result["siteUrl"] = from_union([from_str, from_none], self.site_url)
         return result
@@ -142,6 +137,7 @@ class Name:
 
 @dataclass
 class Character:
+    age: Optional[str] = None
     name: Optional[Name] = None
     description: Optional[str] = None
     image: Optional[Image] = None
@@ -149,12 +145,12 @@ class Character:
     site_url: Optional[str] = None
     id: Optional[int] = None
     date_of_birth: Optional[DateOfBirth] = None
-    age: Optional[str] = None
     favourites: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Character':
         assert isinstance(obj, dict)
+        age = from_union([from_str, from_none], obj.get("age"))
         name = from_union([Name.from_dict, from_none], obj.get("name"))
         description = from_union([from_str, from_none], obj.get("description"))
         image = from_union([Image.from_dict, from_none], obj.get("image"))
@@ -162,12 +158,12 @@ class Character:
         site_url = from_union([from_str, from_none], obj.get("siteUrl"))
         id = from_union([from_int, from_none], obj.get("id"))
         date_of_birth = from_union([DateOfBirth.from_dict, from_none], obj.get("dateOfBirth"))
-        age = from_union([from_str, from_none], obj.get("age"))
         favourites = from_union([from_int, from_none], obj.get("favourites"))
-        return Character(name, description, image, media, site_url, id, date_of_birth, age, favourites)
+        return Character(age, name, description, image, media, site_url, id, date_of_birth, favourites)
 
     def to_dict(self) -> dict:
         result: dict = {}
+        result["age"] = from_union([from_str, from_none], self.age)
         result["name"] = from_union([lambda x: to_class(Name, x), from_none], self.name)
         result["description"] = from_union([from_str, from_none], self.description)
         result["image"] = from_union([lambda x: to_class(Image, x), from_none], self.image)
@@ -175,7 +171,6 @@ class Character:
         result["siteUrl"] = from_union([from_str, from_none], self.site_url)
         result["id"] = from_union([from_int, from_none], self.id)
         result["dateOfBirth"] = from_union([lambda x: to_class(DateOfBirth, x), from_none], self.date_of_birth)
-        result["age"] = from_union([from_str, from_none], self.age)
         result["favourites"] = from_union([from_int, from_none], self.favourites)
         return result
 

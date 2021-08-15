@@ -5,7 +5,7 @@
 
 # <img src="https://avatars.githubusercontent.com/u/18018524?s=200&v=4" width="35px" align="left"></img> anilistWrapPY
 > Name:		anilistWrapPY	\
-> Version:	v0.0.13				\
+> Version:	v0.0.14				\
 > Edit:		1 Aug 2021			\
 > By:		Dank-del (Sayan Biswas) (C)	
 

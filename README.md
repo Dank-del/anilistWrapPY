@@ -5,9 +5,9 @@
 
 # <img src="https://avatars.githubusercontent.com/u/18018524?s=200&v=4" width="35px" align="left"></img> anilistWrapPY
 > Name:		anilistWrapPY	\
-> Version:	v0.0.12				\
+> Version:	v0.0.13				\
 > Edit:		1 Aug 2021			\
-> By:		Dank-del(Sayan Biswas) (C)	
+> By:		Dank-del (Sayan Biswas) (C)	
 
 -----------------------------------------------------------
 
@@ -78,7 +78,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetAiring("magia record - Kakusei Zenya")
+>>> c.Airing("The Detective Is Already Dead")
 ```
 
 ### Anime
@@ -86,7 +86,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetAnime("Kanojo mo kanojo")
+>>> c.Anime("Kanojo mo kanojo")
 ```
 
 ### Character
@@ -94,7 +94,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetCharacter("adashino benio")
+>>> c.Character("Rin tohsaka")
 ```
 
 ### Manga
@@ -102,7 +102,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetManga("One Piece")
+>>> c.Manga("Classroom of the elite")
 ```
 
 ### Media
@@ -110,7 +110,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetMedia("Talentless Nana")
+>>> c.Media("Talentless Nana")
 ```
 
 ### User
@@ -118,7 +118,7 @@ You may want to visit our pypi page [here](https://pypi.org/project/anilistwrapp
 ```py
 >>> from anilistWrapPY import aniWrapPYClient
 >>> c = aniWrapPYClient()
->>> c.GetUser("mimiee")
+>>> c.User("mimiee")
 ```
 
 

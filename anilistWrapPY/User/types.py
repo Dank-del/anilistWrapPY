@@ -1,10 +1,11 @@
 # The contents of this file is free and unencumbered software released into the
 # public domain. For more information, please refer to <http://unlicense.org/>
 
+from anilistWrapPY.utils.utils import to_enum
 from anilistWrapPY.errors import Error
 from dataclasses import dataclass
 from typing import Optional, Any, List
-
+from enum import Enum
 from anilistWrapPY.utils import from_union, from_int, from_none, from_list, to_class, from_str, to_float, from_float, \
     from_bool
 
@@ -39,6 +40,11 @@ class StartDate:
         return result
 
 
+class Status(Enum):
+    FINISHED = "FINISHED"
+    RELEASING = "RELEASING"
+
+
 @dataclass
 class Title:
     user_preferred: Optional[str] = None
@@ -54,11 +60,16 @@ class Title:
         return result
 
 
+class TypeEnum(Enum):
+    ANIME = "ANIME"
+    MANGA = "MANGA"
+
+
 @dataclass
 class PurpleNode:
     id: Optional[int] = None
-    type: Optional[str] = None
-    status: Optional[str] = None
+    type: Optional[TypeEnum] = None
+    status: Optional[Status] = None
     format: Optional[str] = None
     is_adult: Optional[bool] = None
     banner_image: Optional[str] = None
@@ -70,11 +81,11 @@ class PurpleNode:
     def from_dict(obj: Any) -> 'PurpleNode':
         assert isinstance(obj, dict)
         id = from_union([from_int, from_none], obj.get("id"))
-        type = from_union([from_str, from_none], obj.get("type"))
-        status = from_union([from_str, from_none], obj.get("status"))
+        type = from_union([TypeEnum, from_none], obj.get("type"))
+        status = from_union([Status, from_none], obj.get("status"))
         format = from_union([from_str, from_none], obj.get("format"))
         is_adult = from_union([from_bool, from_none], obj.get("isAdult"))
-        banner_image = from_union([from_str, from_none], obj.get("bannerImage"))
+        banner_image = from_union([from_none, from_str], obj.get("bannerImage"))
         title = from_union([Title.from_dict, from_none], obj.get("title"))
         cover_image = from_union([Avatar.from_dict, from_none], obj.get("coverImage"))
         start_date = from_union([StartDate.from_dict, from_none], obj.get("startDate"))
@@ -82,11 +93,11 @@ class PurpleNode:
 
     def to_dict(self) -> dict:
         result: dict = {"id": from_union([from_int, from_none], self.id),
-                        "type": from_union([from_str, from_none], self.type),
-                        "status": from_union([from_str, from_none], self.status),
+                        "type": from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type),
+                        "status": from_union([lambda x: to_enum(Status, x), from_none], self.status),
                         "format": from_union([from_str, from_none], self.format),
                         "isAdult": from_union([from_bool, from_none], self.is_adult),
-                        "bannerImage": from_union([from_str, from_none], self.banner_image),
+                        "bannerImage": from_union([from_none, from_str], self.banner_image),
                         "title": from_union([lambda x: to_class(Title, x), from_none], self.title),
                         "coverImage": from_union([lambda x: to_class(Avatar, x), from_none], self.cover_image),
                         "startDate": from_union([lambda x: to_class(StartDate, x), from_none], self.start_date)}
@@ -183,12 +194,64 @@ class Characters:
 
 
 @dataclass
+class TentacledNode:
+    id: Optional[int] = None
+    name: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'TentacledNode':
+        assert isinstance(obj, dict)
+        id = from_union([from_int, from_none], obj.get("id"))
+        name = from_union([from_str, from_none], obj.get("name"))
+        return TentacledNode(id, name)
+
+    def to_dict(self) -> dict:
+        result: dict = {"id": from_union([from_int, from_none], self.id),
+                        "name": from_union([from_str, from_none], self.name)}
+        return result
+
+
+@dataclass
+class StudiosEdge:
+    favourite_order: Optional[int] = None
+    node: Optional[TentacledNode] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'StudiosEdge':
+        assert isinstance(obj, dict)
+        favourite_order = from_union([from_int, from_none], obj.get("favouriteOrder"))
+        node = from_union([TentacledNode.from_dict, from_none], obj.get("node"))
+        return StudiosEdge(favourite_order, node)
+
+    def to_dict(self) -> dict:
+        result: dict = {"favouriteOrder": from_union([from_int, from_none], self.favourite_order),
+                        "node": from_union([lambda x: to_class(TentacledNode, x), from_none], self.node)}
+        return result
+
+
+@dataclass
+class Studios:
+    edges: Optional[List[StudiosEdge]] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Studios':
+        assert isinstance(obj, dict)
+        edges = from_union([lambda x: from_list(StudiosEdge.from_dict, x), from_none], obj.get("edges"))
+        return Studios(edges)
+
+    def to_dict(self) -> dict:
+        result: dict = {
+            "edges": from_union([lambda x: from_list(lambda x: to_class(StudiosEdge, x), x), from_none], self.edges)}
+        return result
+
+
+@dataclass
 class Favourites:
     anime: Optional[MangaClass] = None
     manga: Optional[MangaClass] = None
     characters: Optional[Characters] = None
-    staff: Optional[MangaClass] = None
-    studios: Optional[MangaClass] = None
+    staff: Optional[Characters] = None
+    studios: Optional[Studios] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Favourites':
@@ -196,16 +259,16 @@ class Favourites:
         anime = from_union([MangaClass.from_dict, from_none], obj.get("anime"))
         manga = from_union([MangaClass.from_dict, from_none], obj.get("manga"))
         characters = from_union([Characters.from_dict, from_none], obj.get("characters"))
-        staff = from_union([MangaClass.from_dict, from_none], obj.get("staff"))
-        studios = from_union([MangaClass.from_dict, from_none], obj.get("studios"))
+        staff = from_union([Characters.from_dict, from_none], obj.get("staff"))
+        studios = from_union([Studios.from_dict, from_none], obj.get("studios"))
         return Favourites(anime, manga, characters, staff, studios)
 
     def to_dict(self) -> dict:
         result: dict = {"anime": from_union([lambda x: to_class(MangaClass, x), from_none], self.anime),
                         "manga": from_union([lambda x: to_class(MangaClass, x), from_none], self.manga),
                         "characters": from_union([lambda x: to_class(Characters, x), from_none], self.characters),
-                        "staff": from_union([lambda x: to_class(MangaClass, x), from_none], self.staff),
-                        "studios": from_union([lambda x: to_class(MangaClass, x), from_none], self.studios)}
+                        "staff": from_union([lambda x: to_class(Characters, x), from_none], self.staff),
+                        "studios": from_union([lambda x: to_class(Studios, x), from_none], self.studios)}
         return result
 
 
@@ -377,6 +440,7 @@ class Stats:
 
 @dataclass
 class User:
+    created_at: None
     moderator_roles: None
     id: Optional[int] = None
     name: Optional[str] = None
@@ -388,7 +452,6 @@ class User:
     is_follower: Optional[bool] = None
     donator_tier: Optional[int] = None
     donator_badge: Optional[str] = None
-    created_at: Optional[int] = None
     is_blocked: Optional[bool] = None
     bans: Optional[List[Any]] = None
     options: Optional[Options] = None
@@ -400,6 +463,7 @@ class User:
     @staticmethod
     def from_dict(obj: Any) -> 'User':
         assert isinstance(obj, dict)
+        created_at = from_none(obj.get("createdAt"))
         moderator_roles = from_none(obj.get("moderatorRoles"))
         id = from_union([from_int, from_none], obj.get("id"))
         name = from_union([from_str, from_none], obj.get("name"))
@@ -411,7 +475,6 @@ class User:
         is_follower = from_union([from_bool, from_none], obj.get("isFollower"))
         donator_tier = from_union([from_int, from_none], obj.get("donatorTier"))
         donator_badge = from_union([from_str, from_none], obj.get("donatorBadge"))
-        created_at = from_union([from_int, from_none], obj.get("createdAt"))
         is_blocked = from_union([from_bool, from_none], obj.get("isBlocked"))
         bans = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("bans"))
         options = from_union([Options.from_dict, from_none], obj.get("options"))
@@ -419,10 +482,10 @@ class User:
         statistics = from_union([Statistics.from_dict, from_none], obj.get("statistics"))
         stats = from_union([Stats.from_dict, from_none], obj.get("stats"))
         favourites = from_union([Favourites.from_dict, from_none], obj.get("favourites"))
-        return User(moderator_roles, id, name, previous_names, avatar, banner_image, about, is_following, is_follower, donator_tier, donator_badge, created_at, is_blocked, bans, options, media_list_options, statistics, stats, favourites)
+        return User(created_at, moderator_roles, id, name, previous_names, avatar, banner_image, about, is_following, is_follower, donator_tier, donator_badge, is_blocked, bans, options, media_list_options, statistics, stats, favourites)
 
     def to_dict(self) -> dict:
-        result: dict = {"moderatorRoles": from_none(self.moderator_roles),
+        result: dict = {"createdAt": from_none(self.created_at), "moderatorRoles": from_none(self.moderator_roles),
                         "id": from_union([from_int, from_none], self.id),
                         "name": from_union([from_str, from_none], self.name),
                         "previousNames": from_union([lambda x: from_list(lambda x: x, x), from_none],
@@ -434,7 +497,6 @@ class User:
                         "isFollower": from_union([from_bool, from_none], self.is_follower),
                         "donatorTier": from_union([from_int, from_none], self.donator_tier),
                         "donatorBadge": from_union([from_str, from_none], self.donator_badge),
-                        "createdAt": from_union([from_int, from_none], self.created_at),
                         "isBlocked": from_union([from_bool, from_none], self.is_blocked),
                         "bans": from_union([lambda x: from_list(lambda x: x, x), from_none], self.bans),
                         "options": from_union([lambda x: to_class(Options, x), from_none], self.options),
@@ -475,4 +537,5 @@ class AnilistUser:
     def to_dict(self) -> dict:
         result: dict = {"data": from_union([lambda x: to_class(Data, x), from_none], self.data)}
         return result
+
 

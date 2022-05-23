@@ -14,8 +14,8 @@ def GetAiring(search: str, baseUrl: str) -> AnilistAiring:
     if req.status_code != 200:
         raise AniListException("Status code isn't 200")
     r = req.json()
-    
+
     try:
-        return AnilistAiring.from_dict(r)
+        return AnilistAiring(**r)
     except BaseException as e:
-        raise AniListException("{}".format(e))
+        raise AniListException(f"{e}") from e

@@ -2,6 +2,6 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 from anilistWrapPY.errors.ex_class import AniListException
-from anilistWrapPY.errors.types import Error
+from anilistWrapPY.errors.types import AniListError
 
-__all__ = [AniListException, Error]
+__all__ = [AniListException, AniListError]

@@ -4,9 +4,8 @@
 import httpx
 
 from anilistWrapPY.User.graphql import user_query
-from anilistWrapPY.User.types import AnilistUser
+from .types import AnilistUser
 from anilistWrapPY.errors.ex_class import AniListException
-from anilistWrapPY.errors.types import AniListError
 
 
 def GetUser(search: str, baseUrl: str) -> AnilistUser:
@@ -16,6 +15,6 @@ def GetUser(search: str, baseUrl: str) -> AnilistUser:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AnilistUser.from_dict(r)
+        return AnilistUser(**r)
     except BaseException as e:
-        raise AniListException("{}".format(e))
+        raise AniListException(f"{e}") from e

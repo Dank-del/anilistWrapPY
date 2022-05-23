@@ -15,6 +15,6 @@ def GetCharacter(search: str, baseUrl: str) -> AnilistCharacter:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AnilistCharacter.from_dict(r)
+        return AnilistCharacter(**r)
     except BaseException as e:
-        raise AniListException("{}".format(e))
+        raise AniListException(f"{e}") from e

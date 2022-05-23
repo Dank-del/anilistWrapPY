@@ -16,6 +16,6 @@ def GetMedia(search: str, baseUrl: str) -> AnilistMedia:
         raise AniListException("Status code isn't 200")
     r = req.json()
     try:
-        return AnilistMedia.from_dict(r)
+        return AnilistMedia(**r)
     except BaseException as e:
-        raise AniListException("{}".format(e))
+        raise AniListException(f"{e}") from e

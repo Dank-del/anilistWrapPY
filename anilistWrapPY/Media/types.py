@@ -2,7 +2,6 @@
 # public domain. For more information, please refer to <http://unlicense.org/>
 
 from __future__ import annotations
-from msilib.schema import Error
 from anilistWrapPY.errors import AniListError
 
 from typing import List, Optional
@@ -54,4 +53,4 @@ class Data(BaseModel):
 
 class AnilistMedia(BaseModel):
     data: Optional[Data] = None
-    error: Optional[AniListError] = Error
+    error: Optional[AniListError] = None
